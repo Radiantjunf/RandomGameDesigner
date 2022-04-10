@@ -12,9 +12,16 @@ namespace RandomGameDesigner.Models
         public string ImageLink { get; set; }
 
         
+
+        public bool IsValid()
+        {
+            return GameKey != null && Title != null && Tags != null && Genres != null && ImageLink != null;
+        }
+
+
         public void SetProperties(string gameKey,string title,string imageLink)
         {
-            Genres = gameKey;
+            GameKey = gameKey;
             Title = title;
             if (!String.IsNullOrEmpty(imageLink)){
                 ImageLink = imageLink;

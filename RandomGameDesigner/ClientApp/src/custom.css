@@ -42,6 +42,14 @@ body {
 
 }
 
+.calculator-takeover {
+    margin-left: 15px;
+    margin-right: 15px;
+    height: 30vh;
+    min-height: 350px;
+    display: flex;
+}
+
 .calculator-takeover-contain {
     width: 100%;
     align-self: center;
@@ -176,6 +184,12 @@ option {
     appearance: none;
 }
 
+@media (min-width: 1400px) {
+    .container {
+        max-width: 100%;
+    }
+    
+}
 
 
 .flex-container > div {

@@ -17,7 +17,8 @@ namespace RandomGameDesigner
         public DataAccess()
         {
             _httpClientStore = SetClient(URL_STORE);
-            _httpClientAPIGames = SetClient(String.Format(URL_API, "IPlayerService/GetOwnedGames/v0001/"));         
+            _httpClientAPIGames = SetClient(String.Format(URL_API, "IPlayerService/GetOwnedGames/v0001/"));
+            _httpClientAPIUser = SetClient(String.Format(URL_API, "ISteamUser/ResolveVanityURL/v0001/"));
         }
 
         private HttpClient SetClient(string url)
@@ -31,13 +32,17 @@ namespace RandomGameDesigner
         {
             _httpClientStore.Dispose();
             _httpClientAPIGames.Dispose();
+            _httpClientAPIUser.Dispose();
         }
 
         public Game GetGameInfo(string gameId)
         {
             
             JObject response = makeRequestAsync(String.Format("?appids={0}",gameId), _httpClientStore).Result;
-            if (response == null) return null;
+            if (response == null)
+            {
+                return new Game() { };
+            }
             bool success = ((bool)response[gameId]["success"]);
             if (success)
             {
@@ -48,12 +53,21 @@ namespace RandomGameDesigner
                 var tags = response[gameId]["data"]["categories"].Values();
                 var genres = response[gameId]["data"]["genres"].Values();
                 Game game = new Game() { };
-                game.SetProperties(gameId, name, image);
-                game.SetGenres(genres);
-                game.SetTags(tags);
+                try
+                {
+                    game.SetProperties(gameId, name, image);
+                    game.SetGenres(genres);
+                    game.SetTags(tags);
+                }
+                catch (Exception)
+                {
+
+                    return new Game() { };
+                }
+                
                 return game;
             }
-            return null;
+            return new Game() { };
             
         }
 
@@ -69,22 +83,17 @@ namespace RandomGameDesigner
         }
 
 
-
-        public bool IsVanity(string name)
+        public string GetUserId(string name)
         {
-            long result;
-            return Int64.TryParse(name, out result);
+            JObject response = makeRequestAsync(String.Format("?key={0}&vanityurl={1}", STEAM_KEY, name), _httpClientAPIUser).Result;
+            if (response == null) return null;
+            var statusId = ((int)response["response"]["success"]);
+            if (statusId == 1) {
+                return ((string?)response["response"]["steamid"]);
+            }
+            return null;
         }
 
-        public bool IsUrl(string name)
-        {
-            return name.Contains("https://");
-        }
-
-        public string CleanUrl(string name)
-        {
-            return name.Split("/").Last();
-        }
 
         public async Task<JObject> makeRequestAsync(string urlParameters, HttpClient client)
         {

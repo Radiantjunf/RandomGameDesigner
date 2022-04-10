@@ -13,31 +13,74 @@ namespace RandomGameDesigner.Controllers
         [HttpPost]
         public IEnumerable<Game> RequestGames([FromBody]Request request)
         {
-
+            IdeaGenerator gen = new IdeaGenerator();
             DataAccess g = new DataAccess();
+            if (gen.IsValidUrl(request.Name))
+            {
+                request.Name = gen.ClearUrl(request.Name);
+            }
+
+            if (gen.IsVanity(request.Name))
+            {
+                var name = g.GetUserId(request.Name);
+                if(name == null)
+                {
+                    //Return a game with the error
+                    return null;
+                }
+                request.Name = name;
+            }
+
+
+
+
+            
             var t = g.GetUserGamesIDs(request.Name);
+            List<Game> te = new List<Game>();
+            //foreach (var gameInfo in t)
+            //{
+            //    Game game = g.GetGameInfo(gameInfo.appid);
+            //    if (game.IsValid())
+            //    {
+            //        te.Add(game);
+            //    }
+                
+            //}
+
+
 
             var random = new Random();
-            var intArray = Enumerable.Range(0, t.Count).OrderBy(t => random.Next()).Take(3).ToArray();
+            var intArray = Enumerable.Range(0, t.Count).OrderBy(t => random.Next()).Take(6).ToArray();
+            foreach (var item in intArray)
+            {
+                Game game = g.GetGameInfo(t[item].appid);
+                if (game.IsValid())
+                {
+                    te.Add(game);
+                }
+            }
 
 
 
-            var g1 = g.GetGameInfo(t[intArray[0]].appid);
-            var g2 = g.GetGameInfo(t[intArray[1]].appid);
-            var g3 = g.GetGameInfo(t[intArray[2]].appid);
-            List<Game> te = new List<Game>();
-            te.Add(g1);
-            te.Add(g2);
-            te.Add(g3);
 
 
+            //var g1 = g.GetGameInfo(t[intArray[0]].appid);
+            //var g2 = g.GetGameInfo(t[intArray[1]].appid);
+            //var g3 = g.GetGameInfo(t[intArray[2]].appid);
+            List<Game> result = new List<Game>();
+            result.Add(te[0]);
+            result.Add(te[1]);
+            result.Add(te[2]);
 
-            return te.ToArray();
+            g.Close();
+
+            return result.ToArray();
         }
 
+
+
+
        
-
-
 
 
 

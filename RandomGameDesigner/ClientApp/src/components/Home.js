@@ -54,7 +54,7 @@ export class Home extends Component {
 
 
         return (
-
+            <div>
                 <div className="calculator-takeover">
                     <div className="calculator-takeover-contain">
                         <h1 className="header-title">Random Game Designer</h1>
@@ -73,10 +73,13 @@ export class Home extends Component {
                                 </select>
                             <button className="btn btn-outline" id="submit-button" onClick={this.refreshPage}>Get Idea</button>
                             </div>
-                        </div>                  
+                        </div>
+                        
                     </div>
-                    {contents}
+                    
                 </div>
+                {contents}
+            </div>
                 
              );
             }
