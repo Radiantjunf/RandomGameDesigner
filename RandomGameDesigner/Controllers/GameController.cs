@@ -15,6 +15,7 @@ namespace RandomGameDesigner.Controllers
         {
             IdeaGenerator gen = new IdeaGenerator();
             DataAccess g = new DataAccess();
+            List<Game> result = new List<Game>();
             if (gen.IsValidUrl(request.Name))
             {
                 request.Name = gen.ClearUrl(request.Name);
@@ -26,7 +27,8 @@ namespace RandomGameDesigner.Controllers
                 if(name == null)
                 {
                     //Return a game with the error
-                    return null;
+                    result.Add(new Game(){Title = "Error user not valid"});
+                    return result.ToArray();
                 }
                 request.Name = name;
             }
@@ -67,7 +69,7 @@ namespace RandomGameDesigner.Controllers
             //var g1 = g.GetGameInfo(t[intArray[0]].appid);
             //var g2 = g.GetGameInfo(t[intArray[1]].appid);
             //var g3 = g.GetGameInfo(t[intArray[2]].appid);
-            List<Game> result = new List<Game>();
+            
             result.Add(te[0]);
             result.Add(te[1]);
             result.Add(te[2]);
