@@ -79,6 +79,31 @@ export class Home extends Component {
                     
                 </div>
                 {contents}
+                <div className="container-sm">
+                    <div className="divhelp">
+                        <h3 class="steamid-examples-header">Examples on what can be entered</h3>
+                        <table class="table table-bordered table-responsive-flex steamid-examples">
+                            <tbody>
+                                <tr>
+                                    <td>Steam vanity url</td>
+                                    <td>https://steamcommunity.com/id/gabelogannewell</td>
+                                </tr>
+                                <tr>
+                                    <td>Steam profile url</td>
+                                    <td>https://steamcommunity.com/profiles/76561197960287930</td>
+                                </tr>                                                           
+                                <tr>
+                                    <td>64-bit SteamID</td>
+                                    <td>76561197960287930</td>
+                                </tr>                              
+                                <tr>
+                                    <td>Steam vanity id</td>
+                                    <td>gabelogannewell</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
                 
              );

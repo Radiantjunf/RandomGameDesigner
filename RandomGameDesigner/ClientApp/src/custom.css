@@ -70,7 +70,7 @@ body {
 .calculator-takeover-input input {
     padding: 15px;
     border-right: 0;
-    border-radius: 0;
+    border-radius: 6px;
     font: inherit;
     color: inherit;
     width: 100%;
@@ -188,8 +188,29 @@ option {
     .container {
         max-width: 100%;
     }
+
     
 }
+
+.divhelp {
+    color: #fff;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.table-bordered {
+    border: 1px solid;
+    border-color: hsl(216deg 25% 30%);
+    border-radius: 6px;
+}
+
+.table {
+    width :100%;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+
 
 
 .flex-container > div {
@@ -200,7 +221,7 @@ option {
     line-height: 75px;
     font-size: 30px;
     border: 2px solid #213145;
-    color:#fff;
+    color: #fff;
 }
 
 .game-image {
