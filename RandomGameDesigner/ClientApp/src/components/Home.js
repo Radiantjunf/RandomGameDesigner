@@ -7,7 +7,7 @@ export class Home extends Component {
         super(props);
         this.state = { games: null, name: '', loading: true };
         this.refreshPage = this.refreshPage.bind(this)
-
+        this.onKeyUp = this.onKeyUp.bind(this);
     }
 
     refreshPage() {
@@ -43,6 +43,12 @@ export class Home extends Component {
         );
     }
 
+    onKeyUp(event) {
+        if (event.charCode === 13) {
+            this.refreshPage();
+        }
+    }
+
 
 
 
@@ -64,7 +70,7 @@ export class Home extends Component {
                                 <svg version="1.1" width="24" height="24" viewBox="0 0 16 16" className="octicon octicon-search" aria-hidden="true">
                                     <path fillRule="evenodd" d="M11.5 7a4.499 4.499 0 11-8.998 0A4.499 4.499 0 0111.5 7zm-.82 4.74a6 6 0 111.06-1.06l3.04 3.04a.75.75 0 11-1.06 1.06l-3.04-3.04z"></path>
                                 </svg>
-                            <input type="text" name="player" id="inputQuery" maxLength="80" minLength="2" autoFocus="" v onChange={evt => this.setState({ name: evt.target.value })} placeholder="Your profile url or steamid" required="" aria-label="Profile URL or SteamID"></input>
+                                <input type="text" name="player" id="inputQuery" maxLength="80" minLength="2" autoFocus="" v onChange={evt => this.setState({ name: evt.target.value })} onKeyPress={this.onKeyUp} placeholder="Your profile url or steamid" required="" aria-label="Profile URL or SteamID"></input>
                             </div>
                             <div className="calculator-takeover-button">
                                 <select id="inputCurrency" name="cc" aria-label="Currency">
