@@ -50,6 +50,7 @@ body {
     display: flex;
 }
 
+
 .calculator-takeover-contain {
     width: 100%;
     align-self: center;
@@ -97,7 +98,7 @@ body {
 }
 
 
-input {
+.textBox {
     background: #213145;
     color: #fff;
     border-radius: 6px;
@@ -127,6 +128,27 @@ select {
     border-bottom-right-radius: 6px;
     border-bottom-left-radius: 6px;
     
+}
+
+.checkbox {
+    position: relative;
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 20px;
+    color: #fff;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    background-color: #161920;
+    box-shadow: 0 1px #1b1f230a, inset 0 1px #ffffff40;
+    border: 2px solid #213145;
+    border-radius: 6px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
 }
 
 option {

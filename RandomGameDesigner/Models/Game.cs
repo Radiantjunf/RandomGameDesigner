@@ -4,7 +4,7 @@ namespace RandomGameDesigner.Models
 {
     public class Game
     {
-
+        public string TopText { get; set; }
         public string GameKey { get; set; }
         public string Title { get; set; }
         public string Tags { get; set; }

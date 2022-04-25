@@ -64,15 +64,13 @@ namespace RandomGameDesigner.Controllers
 
 
 
-
-
             //var g1 = g.GetGameInfo(t[intArray[0]].appid);
             //var g2 = g.GetGameInfo(t[intArray[1]].appid);
             //var g3 = g.GetGameInfo(t[intArray[2]].appid);
-            
-            result.Add(te[0]);
-            result.Add(te[1]);
-            result.Add(te[2]);
+
+            result.Add(AddText(te[0], "Art & Camera"));
+            result.Add(AddText(te[1], "Mechanics"));
+            result.Add(AddText(te[2], "Setting"));
 
             g.Close();
 
@@ -80,7 +78,12 @@ namespace RandomGameDesigner.Controllers
         }
 
 
-
+        private Game AddText(Game game,string topText)
+        {
+            if(game == null) return null;
+            game.TopText = topText;
+            return game; 
+        }
 
        
 

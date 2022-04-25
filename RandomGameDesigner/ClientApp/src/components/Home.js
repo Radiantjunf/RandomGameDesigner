@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 
 export class Home extends Component {
     static displayName = Home.name;
-
     constructor(props) {
         super(props);
-        this.state = { games: null, name: '', loading: true };
+        this.state = { games: null, name: '',type: false, loading: true };
         this.refreshPage = this.refreshPage.bind(this)
         this.onKeyUp = this.onKeyUp.bind(this);
+
     }
 
     refreshPage() {
@@ -27,20 +27,38 @@ export class Home extends Component {
         this.setState({ games: data, loading: false });
     }
 
-    static renderForecastsTable(games) {
-        return (
-            <div className="flex-container">
-                {games.map(game =>
-                    <div className="game-box" key={game.gameKey}>
-                        <img className="game-image" src={game.imageLink}></img>
-                        <h2 className="game-title">{game.title}</h2>
-                        {/*<h2 className="game-text">{game.tags}</h2>*/}
-                        <h2 className="game-text">{game.genres}</h2>
-                    </div>
-                )}
-            </div>
+    static renderForecastsTable(games,type) {
+        
+        if (type) {
+            return (
+                <div className="flex-container">
+                    {games.map(game =>
+                        <div className="game-box" key={game.gameKey}>
+                            <h2 className="game-title">{game.topText}</h2>
+                            <img className="game-image" src={game.imageLink}></img>
+                            <h2 className="game-title">{game.title}</h2>
+                            {/*<h2 className="game-text">{game.tags}</h2>*/}
+                            <h2 className="game-text">{game.genres}</h2>
+                        </div>
+                    )}
+                </div>
 
-        );
+            );
+        } else {
+            return (
+                <div className="flex-container">
+                    {games.map(game =>
+                        <div className="game-box" key={game.gameKey}>
+                            <img className="game-image" src={game.imageLink}></img>
+                            <h2 className="game-title">{game.title}</h2>
+                            {/*<h2 className="game-text">{game.tags}</h2>*/}
+                            <h2 className="game-text">{game.genres}</h2>
+                        </div>
+                    )}
+                </div>
+
+            );
+        }
     }
 
     onKeyUp(event) {
@@ -55,7 +73,7 @@ export class Home extends Component {
     render() {
         let contents = this.state.loading
             ? <p></p>
-            : Home.renderForecastsTable(this.state.games);
+            : Home.renderForecastsTable(this.state.games,this.state.type);
 
 
 
@@ -70,14 +88,18 @@ export class Home extends Component {
                                 <svg version="1.1" width="24" height="24" viewBox="0 0 16 16" className="octicon octicon-search" aria-hidden="true">
                                     <path fillRule="evenodd" d="M11.5 7a4.499 4.499 0 11-8.998 0A4.499 4.499 0 0111.5 7zm-.82 4.74a6 6 0 111.06-1.06l3.04 3.04a.75.75 0 11-1.06 1.06l-3.04-3.04z"></path>
                                 </svg>
-                                <input type="text" name="player" id="inputQuery" maxLength="80" minLength="2" autoFocus="" v onChange={evt => this.setState({ name: evt.target.value })} onKeyPress={this.onKeyUp} placeholder="Your profile url or steamid" required="" aria-label="Profile URL or SteamID"></input>
+                                <input classname= "textBox" type="text" name="player" id="inputQuery" maxLength="80" minLength="2" autoFocus="" v onChange={evt => this.setState({ name: evt.target.value })} onKeyPress={this.onKeyUp} placeholder="Your profile url or steamid" required="" aria-label="Profile URL or SteamID"></input>
                             </div>
                             <div className="calculator-takeover-button">
-                                <select id="inputCurrency" name="cc" aria-label="Currency">
-                                    <option value="all">Genres</option>
-                                    <option value="action">Action</option>
-                                </select>
-                            <button className="btn btn-outline" id="submit-button" onClick={this.refreshPage}>Get Idea</button>
+                                <div className="checkbox">
+                                    <input type="checkbox" id="subscribeNews" name="subscribe" value="newsletter" onChange={evt => this.setState({ type: evt.target.checked })}></input>
+                                    <label for="subscribeNews">Categories</label>
+                                </div>
+                                {/*<select id="inputCurrency" name="cc" aria-label="Currency">*/}
+                                {/*    <option value="all">Genres</option>*/}
+                                {/*    <option value="action">Action</option>*/}
+                                {/*</select>*/}
+                                <button className="btn btn-outline" id="submit-button" onClick={this.refreshPage}>Get Idea</button>
                             </div>
                         </div>
                         
