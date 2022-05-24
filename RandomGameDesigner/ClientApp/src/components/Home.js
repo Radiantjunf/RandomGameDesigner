@@ -114,19 +114,19 @@ export class Home extends Component {
                             <tbody>
                                 <tr>
                                     <td>Steam vanity url</td>
-                                    <td>https://steamcommunity.com/id/gabelogannewell</td>
+                                    <td>https://steamcommunity.com/id/alexjunf</td>
                                 </tr>
                                 <tr>
                                     <td>Steam profile url</td>
-                                    <td>https://steamcommunity.com/profiles/76561197960287930</td>
+                                    <td>https://steamcommunity.com/profiles/76561198024878463</td>
                                 </tr>                                                           
                                 <tr>
                                     <td>64-bit SteamID</td>
-                                    <td>76561197960287930</td>
+                                    <td>76561198024878463</td>
                                 </tr>                              
                                 <tr>
                                     <td>Steam vanity id</td>
-                                    <td>gabelogannewell</td>
+                                    <td>alexjunf</td>
                                 </tr>
                             </tbody>
                         </table>
