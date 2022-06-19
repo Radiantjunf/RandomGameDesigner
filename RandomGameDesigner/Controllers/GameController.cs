@@ -44,13 +44,18 @@ namespace RandomGameDesigner.Controllers
                 if(name == null)
                 {
                     //Return a game with the error
-                    result.Add(new Game(){Title = "Error user not valid"});
+                    result.Add(new Game(){Title = "Error user not found"});
                     return result.ToArray();
                 }
                 request.Name = name;
             }
 
-
+            if (g.GetAccountState(request.Name) != DataAccess.AccountState.Public)
+            {
+                //Return a game with the error
+                result.Add(new Game() { Title = "Error user is private" });
+                return result.ToArray();
+            }
 
 
             

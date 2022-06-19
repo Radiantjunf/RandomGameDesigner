@@ -6,6 +6,8 @@ using System.Net.Http.Headers;
 
 namespace RandomGameDesigner
 {
+
+   
     public class DataAccess
     {
         private const string URL_API = "http://api.steampowered.com/{0}";
@@ -14,11 +16,22 @@ namespace RandomGameDesigner
         private HttpClient _httpClientStore;
         private HttpClient _httpClientAPIGames;
         private HttpClient _httpClientAPIUser;
+        private HttpClient _httpClientAPIUserV2;
+
+
+        public enum AccountState
+        {
+            NotFound = 0,
+            Private = 1,
+            Public = 3
+        }
+
         public DataAccess()
         {
             _httpClientStore = SetClient(URL_STORE);
             _httpClientAPIGames = SetClient(String.Format(URL_API, "IPlayerService/GetOwnedGames/v0001/"));
             _httpClientAPIUser = SetClient(String.Format(URL_API, "ISteamUser/ResolveVanityURL/v0001/"));
+            _httpClientAPIUserV2 = SetClient(String.Format(URL_API, "ISteamUser/GetPlayerSummaries/v0002/"));
         }
 
         private HttpClient SetClient(string url)
@@ -33,6 +46,7 @@ namespace RandomGameDesigner
             _httpClientStore.Dispose();
             _httpClientAPIGames.Dispose();
             _httpClientAPIUser.Dispose();
+            _httpClientAPIUserV2.Dispose();
         }
 
         public Game GetGameInfo(string gameId)
@@ -89,6 +103,22 @@ namespace RandomGameDesigner
             }
            
 
+        }
+
+        public AccountState GetAccountState(string userSteamId)
+        {
+            JObject response = makeRequestAsync(String.Format("?key={0}&steamids={1}", STEAM_KEY, userSteamId), _httpClientAPIUserV2).Result;
+            if (response == null) return AccountState.NotFound;
+            if (!response["response"]["players"].HasValues) return AccountState.NotFound;
+            var name = response["response"]["players"][0]["communityvisibilitystate"].ToString();
+            if (name == "1" || name == "2")
+            {
+                return AccountState.Private;
+            }else if(name == "3")
+            {
+                return AccountState.Public;
+            }
+            return AccountState.NotFound; 
         }
 
 

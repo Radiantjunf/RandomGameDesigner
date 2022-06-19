@@ -70,7 +70,15 @@ namespace RandomGameDesignerTests
             dataAccess.Close();
         }
 
-
+        [Theory]
+        [InlineData("76561198024878463", DataAccess.AccountState.Public)]
+        [InlineData("1", DataAccess.AccountState.NotFound)]
+        [InlineData("76561197960287930", DataAccess.AccountState.Private)]
+        public void GetAccountStateTest(string name, DataAccess.AccountState result)
+        {
+            DataAccess gen = new DataAccess();
+            Assert.Equal(gen.GetAccountState(name),result);
+        }
 
 
     }
