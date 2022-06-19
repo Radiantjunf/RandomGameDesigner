@@ -76,9 +76,18 @@ namespace RandomGameDesigner
 
             JObject response = makeRequestAsync(String.Format("?key={0}&steamid={1}&format=json", STEAM_KEY,userSteamId), _httpClientAPIGames).Result;
             if (response == null) return null;
-            var name = response["response"]["games"].ToString();
-            List<gameid> steps = JsonConvert.DeserializeObject<List<gameid>>(name);
-            return steps;
+            try
+            {
+                var name = response["response"]["games"].ToString();
+                List<gameid> steps = JsonConvert.DeserializeObject<List<gameid>>(name);
+                return steps;
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+           
 
         }
 

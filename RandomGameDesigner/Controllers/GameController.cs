@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using RandomGameDesigner.Models;
+using RandomGameDesigner.Models.RequestModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -7,8 +10,22 @@ namespace RandomGameDesigner.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+
     public class GameController : ControllerBase
     {
+        [HttpGet] 
+        public ActionResult login([FromQuery(Name = "openid.identity")] string identity)
+        {
+            if(identity == null)
+            {
+                return null;
+            }
+            //return identity.Split('/').Last();
+            return Redirect("https://randomgamedesigner.azurewebsites.net/?id="+ identity.Split('/').Last());
+        }
+
+
+
         // GET: api/<GameController>
         [HttpPost]
         public IEnumerable<Game> RequestGames([FromBody]Request request)
@@ -38,6 +55,12 @@ namespace RandomGameDesigner.Controllers
 
             
             var t = g.GetUserGamesIDs(request.Name);
+            if(t == null)
+            {
+                //Return a game with the error
+                result.Add(new Game() { Title = "Error can't find games" });
+                return result.ToArray();
+            }
             List<Game> te = new List<Game>();
             //foreach (var gameInfo in t)
             //{
@@ -85,9 +108,9 @@ namespace RandomGameDesigner.Controllers
             return game; 
         }
 
+
+
        
-
-
 
 
 

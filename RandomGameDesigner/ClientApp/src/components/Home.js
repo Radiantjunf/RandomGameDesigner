@@ -61,16 +61,20 @@ export class Home extends Component {
         }
     }
 
+
+
     onKeyUp(event) {
         if (event.charCode === 13) {
             this.refreshPage();
         }
     }
 
-
+    
 
 
     render() {
+        let id = (document.URL.includes('?id=') ? document.URL.split("?id=")[1] : null);
+        if (this.state.name == '') { this.setState({ name: id })}     
         let contents = this.state.loading
             ? <p></p>
             : Home.renderForecastsTable(this.state.games,this.state.type);
@@ -79,16 +83,19 @@ export class Home extends Component {
 
         return (
             <div>
+                {/*<div>*/}
+                {/*    <h3>ID:{id}</h3>*/}
+                {/*</div>*/}
                 <div className="calculator-takeover">
                     <div className="calculator-takeover-contain">
                         <h1 className="header-title">Random Game Designer</h1>
-                        <h2 className="header-subtitle">Create a game based on steam your steam Library</h2>
+                        <h2 className="header-subtitle">Create a game based your steam Library</h2>
                         <div className="calculator-form">
                             <div className="calculator-takeover-input">
                                 <svg version="1.1" width="24" height="24" viewBox="0 0 16 16" className="octicon octicon-search" aria-hidden="true">
                                     <path fillRule="evenodd" d="M11.5 7a4.499 4.499 0 11-8.998 0A4.499 4.499 0 0111.5 7zm-.82 4.74a6 6 0 111.06-1.06l3.04 3.04a.75.75 0 11-1.06 1.06l-3.04-3.04z"></path>
                                 </svg>
-                                <input classname= "textBox" type="text" name="player" id="inputQuery" maxLength="80" minLength="2" autoFocus="" v onChange={evt => this.setState({ name: evt.target.value })} onKeyPress={this.onKeyUp} placeholder="Your profile url or steamid" required="" aria-label="Profile URL or SteamID"></input>
+                                <input classname="textBox" type="text" value={this.state.name} name="player" id="inputQuery" maxLength="80" minLength="2" autoFocus="" v onChange={evt => this.setState({ name: evt.target.value })} onKeyPress={this.onKeyUp} placeholder="Your profile url or steamid" required="" aria-label="Profile URL or SteamID"></input>
                             </div>
                             <div className="calculator-takeover-button">
                                 <div className="checkbox">
@@ -100,6 +107,8 @@ export class Home extends Component {
                                 {/*    <option value="action">Action</option>*/}
                                 {/*</select>*/}
                                 <button className="btn btn-outline" id="submit-button" onClick={this.refreshPage}>Get Idea</button>
+                               
+                                
                             </div>
                         </div>
                         
@@ -114,19 +123,23 @@ export class Home extends Component {
                             <tbody>
                                 <tr>
                                     <td>Steam vanity url</td>
-                                    <td>https://steamcommunity.com/id/gabelogannewell</td>
+                                    <td>https://steamcommunity.com/id/alexjunf</td>
                                 </tr>
                                 <tr>
                                     <td>Steam profile url</td>
-                                    <td>https://steamcommunity.com/profiles/76561197960287930</td>
+                                    <td>https://steamcommunity.com/profiles/76561198024878463</td>
                                 </tr>                                                           
                                 <tr>
                                     <td>64-bit SteamID</td>
-                                    <td>76561197960287930</td>
+                                    <td>76561198024878463</td>
                                 </tr>                              
                                 <tr>
                                     <td>Steam vanity id</td>
-                                    <td>gabelogannewell</td>
+                                    <td>alexjunf</td>
+                                </tr>
+                                <tr>
+                                    <td>Sign in via steam</td>
+                                    <td>On Top right corner</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -134,6 +147,8 @@ export class Home extends Component {
                 </div>
             </div>
                 
-             );
+        );
+
+
             }
 }
