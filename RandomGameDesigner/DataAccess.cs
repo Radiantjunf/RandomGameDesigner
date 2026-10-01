@@ -12,7 +12,7 @@ namespace RandomGameDesigner
     {
         private const string URL_API = "http://api.steampowered.com/{0}";
         private const string URL_STORE = "https://store.steampowered.com/api/appdetails";
-        private const string STEAM_KEY = "CB89CF1B8A1EB50BA8A4ABE1AC6920AD";
+        private static readonly string STEAM_KEY = Environment.GetEnvironmentVariable("STEAM_API_KEY") ?? string.Empty;
         private HttpClient _httpClientStore;
         private HttpClient _httpClientAPIGames;
         private HttpClient _httpClientAPIUser;

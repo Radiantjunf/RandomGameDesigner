@@ -21,8 +21,8 @@ builder.Services.AddAuthentication(options =>
     .AddOpenIdConnect("oidc", options =>
      {
          options.Authority = "https://steamcommunity.com/openid/";
-         options.ClientId = "cstrade";
-         options.ClientSecret = "CB89CF1B8A1EB50BA8A4ABE1AC6920AD";
+         options.ClientId = builder.Configuration["Authentication:Steam:ClientId"];
+         options.ClientSecret = builder.Configuration["Authentication:Steam:ClientSecret"];
          options.ResponseType = "code";
          options.UsePkce = true;
          options.ResponseMode = "query";
